@@ -1,4 +1,8 @@
 <?php
+/**
+ * Config file
+ * 
+ */
 
 return array(
 

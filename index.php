@@ -1,4 +1,10 @@
 <?php 
+/**
+ * Main entry point.
+ * Message types (birthday/annivesary) can be changed via the cfg file in config/main.php
+ * Simply change 'messageType' val to 'anniversary' in cfg file config/main.php to use a 
+ * that messenger.
+ */
 date_default_timezone_set('Africa/Johannesburg');
 
 require('class/Config.php');

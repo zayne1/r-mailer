@@ -1,4 +1,9 @@
 <?php
+/**
+ * AnniversaryMessenger
+ * Sends the email (for real if you uncomment the commented block in send())
+ * Sets a flag to only allow one email run per day.
+ */
 
 require_once('InterfaceMessenger.php');
 
@@ -10,6 +15,7 @@ class AnniversaryMessenger implements InterfaceMessenger {
     protected $sentFlagName;
     
     public function __construct(Model $model) {        
+        
         $this->messageType = Config::getConfig('messageType');
         $this->message = Config::getConfig('messageDetails')->{$this->messageType}->message;
         $this->anniversariesArray = $model->getTodaysAnniversaries();
@@ -23,12 +29,13 @@ class AnniversaryMessenger implements InterfaceMessenger {
             echo "\r\n {$this->messageType} already completed for today";
 
         } else {
-            
+
             $anniversaryNamesList = null;
 
             foreach ($this->anniversariesArray as $key => $value) {
                 $anniversaryNamesList .= $value->name . ', ';
             }
+
             $anniversaryNamesList = rtrim($anniversaryNamesList, ', ');
 
             // below we output what we can send. Further down is a comment block of code that can actually send an email

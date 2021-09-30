@@ -1,4 +1,9 @@
 <?php
+/**
+ * BirthdayMessenger
+ * Sends the email (for real if you uncomment the commented block in send())
+ * Sets a flag to only allow one email run per day.
+ */
 
 require_once('InterfaceMessenger.php');
 
@@ -10,6 +15,7 @@ class BirthdayMessenger implements InterfaceMessenger {
     protected $sentFlagName;
     
     public function __construct(Model $model) {
+        
         $this->messageType = Config::getConfig('messageType');
         $this->message = Config::getConfig('messageDetails')->{$this->messageType}->message;
         $this->birthdaysArray = $model->getTodaysBirthdays();
@@ -29,6 +35,7 @@ class BirthdayMessenger implements InterfaceMessenger {
             foreach ($this->birthdaysArray as $key => $value) {
                 $birthdayNamesList .= $value->name . ', ';
             }
+        
             $birthdayNamesList = rtrim($birthdayNamesList, ', ');
 
             // below we output what we can send. Further down is a comment block of code that can actually send an email
@@ -65,7 +72,6 @@ class BirthdayMessenger implements InterfaceMessenger {
         That will serve as a flag to disallow subsequent birthday emails being sent */
 
         file_put_contents($this->sentFlagName, "This file was created by the mailer system. Do not delete.");
-
     }   
 
     public function _getSentFlag() {

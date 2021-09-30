@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Model
+ * Handles all the user and api data work
+ * 
+ */
+
 class Model
 {
     private $APIUrlEmployees;
@@ -10,6 +17,7 @@ class Model
     private $todaysAnniversaryRecs;
 
     public function __construct() {
+
         $this->APIUrlEmployees = Config::getConfig('APIUrlEmployees');
         $this->APIUrlNoBirthdays = Config::getConfig('APIUrlNoBirthdays');
         
@@ -17,7 +25,6 @@ class Model
         $this->birthdaySkips = $this->_getBirthdaySkips();
         $this->currMonth = date('m');
         $this->currDay = date('d');
-
     }
 
     public function getAllEmplyees() {
@@ -30,11 +37,11 @@ class Model
     }
 
     public function getTodaysBirthdays() {
+
         foreach ($this->employees as $key => $val) {
             if ( !in_array($val->id, $this->birthdaySkips)
                 && $val->employmentEndDate == null
                 && $val->employmentStartDate !== null
-                // && $key < 10
                 ) 
                 {
 
@@ -51,10 +58,10 @@ class Model
     }
 
     public function getTodaysAnniversaries() {
+
         foreach ($this->employees as $key => $val) {
             if ( $val->employmentEndDate == null
                 && $val->employmentStartDate !== null
-                // && $key < 10
                 ) 
                 {
 
